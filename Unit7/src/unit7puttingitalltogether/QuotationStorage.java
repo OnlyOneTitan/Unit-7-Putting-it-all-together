@@ -11,7 +11,7 @@ public class QuotationStorage {
 	public String toString() {
 		String output = "";
 		for(int i = 0; i < storage.length; i++) {
-			output += storage[i] + "\n";
+			output += "[" + i + "] " + storage[i] + "\n";
 		}
 		return output;
 	}
