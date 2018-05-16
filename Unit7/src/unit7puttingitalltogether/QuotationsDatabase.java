@@ -9,6 +9,7 @@ public class QuotationsDatabase {
 
 	public static void main(String[] args) throws IOException {
 		
+		String user = "";
 		int userDialog = 0;
 		int array = 0;
 		
@@ -56,13 +57,18 @@ public class QuotationsDatabase {
 			// DISPLAY RANDOM QUOTE
 			else if(userDialog == 1) {
 				int rng = (int) (Math.random() * array);
+				System.out.println("============================================");
 				System.out.println(quotes.storage[rng]);
+				System.out.println("============================================");
 				
 			}
 			
 			// DISPLAY SELECTED QUOTE
 			else if(userDialog == 2) {
-				
+				user = (String) JOptionPane.showInputDialog(null, "Which quote would you like to use?", "Quotations Database", JOptionPane.PLAIN_MESSAGE, null, quotes.storage, quotes.storage[0]);
+				System.out.println("============================================");
+				System.out.println(user);
+				System.out.println("============================================");
 			}
 			
 			// ADD A QUOTE
