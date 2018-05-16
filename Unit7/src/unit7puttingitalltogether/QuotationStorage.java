@@ -2,7 +2,7 @@ package unit7puttingitalltogether;
 
 public class QuotationStorage {
 	
-	String[] storage;
+	public String[] storage;
 	
 	public QuotationStorage(String[] storage_) {
 		storage = storage_;

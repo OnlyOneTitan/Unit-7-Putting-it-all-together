@@ -38,6 +38,7 @@ public class QuotationsDatabase {
 			String line1 = quoteReader1.readLine();
 			storage[i] = line1;
 		}
+		QuotationStorage quotes = new QuotationStorage(storage);
 		
 		while(userDialog != 5) {
 			
@@ -46,7 +47,6 @@ public class QuotationsDatabase {
 			// DISPLAY ALL QUOTES
 			if(userDialog == 0) {
 				
-				QuotationStorage quotes = new QuotationStorage(storage);
 				System.out.println("============================================");
 				System.out.println(quotes);
 				System.out.println("============================================");
@@ -55,7 +55,9 @@ public class QuotationsDatabase {
 			
 			// DISPLAY RANDOM QUOTE
 			else if(userDialog == 1) {
-				int rng = (int) (Math.random());
+				int rng = (int) (Math.random() * array);
+				System.out.println(quotes.storage[rng]);
+				
 			}
 			
 			// DISPLAY SELECTED QUOTE
