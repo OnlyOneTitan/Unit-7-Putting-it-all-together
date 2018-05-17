@@ -1,88 +1,135 @@
 package unit7puttingitalltogether;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import javax.swing.JOptionPane;
+import java.io.*;
+import java.util.*;
+import javax.swing.*;
 
 public class QuotationsDatabase {
 
 	public static void main(String[] args) throws IOException {
-		
+
 		String user = "";
+		String authName;
+		String quoteInput;
+		String removeInput;
 		int userDialog = 0;
-		int array = 0;
+		String fileName = "quotes.txt";
 		
-		String[] options = {"Display all quotes", "Display random quote", "Display selected quote", "Add a quote", "Remove a quote", "Exit"};
+		String dir = System.getProperty("user.dir");
+		System.out.println(dir + "\\src\\unit7puttingitalltogether\\quotes.txt");
 		
-		
-		
-		BufferedReader quoteReader = new BufferedReader(new FileReader("C:/Users/Matt McB/git/Unit-7-Putting-it-all-together/Unit7/src/unit7puttingitalltogether/quotes.txt"));
-		BufferedReader quoteReader1 = new BufferedReader(new FileReader("C:/Users/Matt McB/git/Unit-7-Putting-it-all-together/Unit7/src/unit7puttingitalltogether/quotes.txt"));
-		
-		while(true) {
-			
-			String line = quoteReader.readLine();
-			
-			if(line == null) {
-				break;
-			}
-			
-			else {
-				array++;
-			}
+		String[] options = { "Display all quotes", "Display random quote", "Display selected quote", "Search by Author",
+				"Add a quote", "Remove a quote", "Exit" };
+		BufferedReader quoteReader1 = null;
+		try {
+			quoteReader1 = new BufferedReader(new FileReader(dir + "\\src\\unit7puttingitalltogether\\quotes.txt"));
+		} 
+		catch (FileNotFoundException e) {
+			JOptionPane.showMessageDialog(null, "File: " + fileName + " not found.");
+			System.exit(0);
 		}
-		quoteReader.close();
-		
-		String[] storage = new String[array];					
-		for(int i = 0; i < array; i++) {
+		ArrayList<String> authors = new ArrayList();
+		ArrayList<String> storage = new ArrayList();
+		while (true) {
 			String line1 = quoteReader1.readLine();
-			storage[i] = line1;
+			if (line1 == null) {
+				break;
+			} 
+			else {
+				String charAt = Character.toString(line1.charAt(0));
+				if (charAt.equalsIgnoreCase("-")) {
+					authors.add(line1.substring(2, line1.length()));
+				} 
+				else {
+					storage.add(line1);
+				}
+			}
 		}
-		QuotationStorage quotes = new QuotationStorage(storage);
-		
-		while(userDialog != 5) {
-			
-			userDialog = JOptionPane.showOptionDialog(null, "Please choose an option", "Quotations Database", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
-			
+		quoteReader1.close();
+		QuotationStorage quotes = new QuotationStorage(storage, authors);
+
+		while (userDialog != 6) {
+
+			userDialog = JOptionPane.showOptionDialog(null, "Please choose an option", "Quotations Database",
+					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
+
 			// DISPLAY ALL QUOTES
-			if(userDialog == 0) {
-				
+			if (userDialog == 0) {
+
 				System.out.println("============================================");
 				System.out.println(quotes);
 				System.out.println("============================================");
-				
+
 			}
-			
+
 			// DISPLAY RANDOM QUOTE
-			else if(userDialog == 1) {
-				int rng = (int) (Math.random() * array);
+			else if (userDialog == 1) {
+				int rng = (int) (Math.random() * quotes.storage.size());
 				System.out.println("============================================");
-				System.out.println(quotes.storage[rng]);
+				System.out.println(quotes.storage.get(rng));
 				System.out.println("============================================");
-				
+
 			}
-			
+
 			// DISPLAY SELECTED QUOTE
-			else if(userDialog == 2) {
-				user = (String) JOptionPane.showInputDialog(null, "Which quote would you like to use?", "Quotations Database", JOptionPane.PLAIN_MESSAGE, null, quotes.storage, quotes.storage[0]);
+			else if (userDialog == 2) {
+				user = (String) JOptionPane.showInputDialog(null, "Which quote would you like to use?",
+						"Quotations Database", JOptionPane.PLAIN_MESSAGE, null, quotes.storage.toArray(),
+						quotes.storage.get(0));
 				System.out.println("============================================");
 				System.out.println(user);
 				System.out.println("============================================");
 			}
-			
+			// SEARCH BY AUTHOR
+			else if (userDialog == 3) {
+				while (true) {
+					authName = JOptionPane
+							.showInputDialog("Please input the author of the quote you would like to add.");
+					if (authName.equalsIgnoreCase(null) || authName.equalsIgnoreCase("")) {
+						JOptionPane.showMessageDialog(null, "Error! this field cannot be BLANK!");
+					} 
+					else {
+						break;
+					}
+				}
+				quotes.search(authName);
+			}
 			// ADD A QUOTE
-			else if(userDialog == 3) {
-				
+			else if (userDialog == 4) {
+				while (true) {
+					quoteInput = JOptionPane.showInputDialog("Please input the quote you would like to add.");
+					if (quoteInput.equalsIgnoreCase(null) || quoteInput.equalsIgnoreCase("")) {
+						JOptionPane.showMessageDialog(null, "Error! this field cannot be BLANK!");
+					} 
+					else {
+						break;
+					}
+				}
+				while (true) {
+					authName = JOptionPane
+							.showInputDialog("Please input the author of the quote you would like to add.");
+					if (authName.equalsIgnoreCase(null) || authName.equalsIgnoreCase("")) {
+						JOptionPane.showMessageDialog(null, "Error! this field cannot be BLANK!");
+					} 
+					else {
+						break;
+					}
+				}
+				quotes.addQuote(authName, quoteInput);
 			}
-			
+
 			// REMOVE A QUOTE
-			else if(userDialog == 4) {
-				
+			else if (userDialog == 5) {
+				removeInput = (String) JOptionPane.showInputDialog(null, "Which quote would you like to use?",
+						"Quotations Database", JOptionPane.PLAIN_MESSAGE, null, quotes.storage.toArray(),
+						quotes.storage.get(0));
+				quotes.removeQuote(removeInput);
 			}
-			
+			// EXIT MENU AND THEN REWRITE TXT FILE
+
 		}
-		
+		System.exit(0);
+
 	}
 
 }

@@ -1,31 +1,18 @@
 "This is a quote 1" - Person
+- A
 "This is a quote 2" - Person
+- A
 "This is a quote 3" - Person
+- B
 "This is a quote 4" - Person
+- B
 "This is a quote 5" - Person
+- B
 "This is a quote 6" - Person
+- C
 "This is a quote 7" - Person
+- D
 "This is a quote 8" - Person
+- Z
 "This is a quote 9" - Person
-"This is a quote 10" - Person
-"This is a quote 11" - Person
-"This is a quote 12" - Person
-"This is a quote 13" - Person
-"This is a quote 14" - Person
-"This is a quote 15" - Person
-"This is a quote 16" - Person
-"This is a quote 17" - Person
-"This is a quote 18" - Person
-"This is a quote 19" - Person
-"This is a quote 20" - Person
-"This is a quote 21" - Person
-"This is a quote 22" - Person
-"This is a quote 23" - Person
-"This is a quote 24" - Person
-"This is a quote 25" - Person
-"This is a quote 26" - Person
-"This is a quote 27" - Person
-"This is a quote 28" - Person
-"This is a quote 29" - Person
-"This is a quote 30" - Person
-"This is a quote 31" - Person
+- Z
