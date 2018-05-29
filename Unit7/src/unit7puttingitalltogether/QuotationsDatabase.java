@@ -9,6 +9,7 @@ public class QuotationsDatabase {
 
     public static void main(String[] args) throws IOException {
 
+    	// Initializing variables
         boolean exit;
         String user = "";
         String authName = "";
@@ -18,9 +19,12 @@ public class QuotationsDatabase {
         ArrayList<String> storage = new ArrayList();
         int userDialog = 0;
         
-        
+        // Used to find the location of the text file. This allows the program to read the text file from any computer.
         String location = System.getProperty("user.dir") + "\\src\\unit7puttingitalltogether\\quotes2.txt";
+        // For the option dialog
         String[] options = {"Display all quotes", "Display random quote", "Display selected quote", "Search by Author","Add a quote", "Remove a quote", "Exit"};
+        
+        // Initializes the readers/writers
         BufferedReader quoteReader1 = null;
         PrintWriter fileWriter1 = null;
         //error check to make sure file in given directory exists
@@ -29,8 +33,8 @@ public class QuotationsDatabase {
         }
         catch(FileNotFoundException e)
         {
+        	
             JOptionPane.showMessageDialog(null, "File not found");
-            quoteReader1.close();
             System.exit(0);
         }	
         //Fills the storage and authors array list with respective info
@@ -69,10 +73,8 @@ public class QuotationsDatabase {
             // DISPLAY ALL QUOTES
             if(userDialog == 0) {
 
-                    System.out.println("============================================");
-                    System.out.println(quotes);
-                    System.out.println("============================================");
-
+                    JOptionPane.showMessageDialog(null, quotes, "Quotations Database", JOptionPane.PLAIN_MESSAGE);
+                    
             }
 
             // DISPLAY RANDOM QUOTE
@@ -87,9 +89,7 @@ public class QuotationsDatabase {
                 {
                     //rng variable stores random index value to choose a random quote
                     int rng = (int) (Math.random() * quotes.storage.size());
-                    System.out.println("============================================");
-                    System.out.println(quotes.storage.get(rng));
-                    System.out.println("============================================");
+                    JOptionPane.showMessageDialog(null, quotes.storage.get(rng), "Quotations Database", JOptionPane.PLAIN_MESSAGE);
                 }
 
             }
@@ -98,24 +98,24 @@ public class QuotationsDatabase {
             else if(userDialog == 2) {
                 if (quotes.storage.size() <= 0)
                 {
-                    JOptionPane.showMessageDialog(null, "Error!\nThere are no quotes to select!");
+                    JOptionPane.showMessageDialog(null, "Error!\nThere are no quotes to select!", "Quotations Database", JOptionPane.PLAIN_MESSAGE);
                 }
                 else
                 {
                     user = (String) JOptionPane.showInputDialog(null, "Which quote would you like to use?\nClick \"cancel\" to return to the main menu.", "Quotations Database", JOptionPane.PLAIN_MESSAGE, null, quotes.storage.toArray(), quotes.storage.get(0));
                     if (user != null){
-                    System.out.println("============================================");
-                    System.out.println(user);
-                    System.out.println("============================================");
+                        JOptionPane.showMessageDialog(null, user, "Quotations Database", JOptionPane.PLAIN_MESSAGE);
+
                     }
                 }
             }
             //SEARCH BY AUTHOR
             else if (userDialog == 3)
             {
+            	// Checks the storage to see if there are any quotes. If there is, it goes to the else statement, where a drop down menu interface is displayed. If there is nothing inside he storage, all you would get is a message saying that there is nothing inside.
                 if (quotes.storage.size() <= 0)
                 {
-                    JOptionPane.showMessageDialog(null, "Error!\nThere are no authors to select!");
+                    JOptionPane.showMessageDialog(null, "Error!\nThere are no authors to select!", "Quotations Database", JOptionPane.PLAIN_MESSAGE);
                 }
                 else
                     {
@@ -133,7 +133,9 @@ public class QuotationsDatabase {
             }
             // ADD A QUOTE
             else if(userDialog == 4) {
+            	// Gives exit a boolean of false. Used in the while loop.
                 exit = false;
+                // Loop: Asks the user for input of a quote. The inputs cannot equal nothing. If the user clicks cancel, it will return the user to the main menu. Otherwise it would break and enter the next loop.
                 while (exit == false)
                 {
                     quoteInput = JOptionPane.showInputDialog("Please input the quote you would like to add.\nClick \"cancel\" to return to the main menu.");
@@ -150,6 +152,7 @@ public class QuotationsDatabase {
                         break;
                     }
                 }
+                // Loop: Asks the user for input of an author. The inputs cannot equal nothing. If the user clicks cancel, it will return the user to the main menu. Otherwise it would break and go to the next part where it adds the quotes to the text file..
                 while (exit == false)
                 {
                    authName = JOptionPane.showInputDialog("Please input the author of the quote you would like to add.\nClick \"cancel\" to return to the main menu.");
@@ -174,6 +177,7 @@ public class QuotationsDatabase {
 
             // REMOVE A QUOTE
             else if(userDialog == 5) {
+            	// Checks if there is 0 quotes inside, if there is, the user does not have to remove anything. Otherwise the program will give the user a drop down menu of the quote. If the user selects ok on that quote, then the program will remove the quote.
                 if (quotes.storage.size() <= 0)
                 {
                     JOptionPane.showMessageDialog(null, "Error!\nThere are no quotes to remove!");
@@ -186,7 +190,11 @@ public class QuotationsDatabase {
                     }
                 }
             }
+            else if(userDialog == 6 || userDialog == -1) {
+            	break;
+            }
         }
+        // Creates a new writer for the text file.
         fileWriter1 = new PrintWriter(new FileWriter(location));
         //counter for quotes, stops loop when there are no more quotes to add
         for (int j = 0; j < quotes.storage.size(); j++)

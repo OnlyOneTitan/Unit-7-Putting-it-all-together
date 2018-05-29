@@ -4,6 +4,7 @@ import java.util.*;
 import javax.swing.*;
 
 public class QuotationStorage {
+	// Initializes variables.
     private int indexNum;
     private String quoteStr;
     //Arraylist to store index of authors
@@ -18,6 +19,7 @@ public class QuotationStorage {
         storage = storage_;
         authorList = authorList_;
     }
+    
     //toString to print all quotes out
     public String toString() {
         String output = "";
@@ -26,6 +28,7 @@ public class QuotationStorage {
         }
         return output;
     }
+    
     //method to remove quote
     public void removeQuote(String quoteStr)
     {
@@ -74,6 +77,7 @@ public class QuotationStorage {
     //searches for quotes by author selected in prior method
     public void search(String V)
     {
+    	String output = "";
         //sorted linear search
         int k;
         //intitailizes temporary arraylist to store the index positions of quotes
@@ -91,13 +95,13 @@ public class QuotationStorage {
             }
         }
         //prints out all quotes by specified author.
-        System.out.println("All the quotes by "+V+" are:");
-        System.out.println("============================================");
+        output += "All the quotes by "+V+" are:\n";
+        
         for (int n = 0; n < quoteIndex.size(); n++)
         {
-            System.out.println(storage.get(quoteIndex.get(n)));
+            output += storage.get(quoteIndex.get(n)) + "\n";
         }
-        System.out.println("============================================");
+        JOptionPane.showMessageDialog(null, output, "Quotations Database", JOptionPane.PLAIN_MESSAGE);
         }
         //bubble sort
         public void sort() {
